@@ -2105,7 +2105,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5704e324-fc48-4232-8ce2-eb54cbfc7ab7")
-		(property "Reference" "Rs"
+		(property "Reference" "Rs1"
 			(at 31.75 31.75 90)
 			(effects
 				(font
@@ -2157,7 +2157,7 @@
 		(instances
 			(project ""
 				(path "/b5279a47-4e53-4efd-ad9f-4a5619d0841f"
-					(reference "Rs")
+					(reference "Rs1")
 					(unit 1)
 				)
 			)

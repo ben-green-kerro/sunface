@@ -30,3 +30,5 @@ fp-info-cache
 *.xml
 *.csv
 .DS_Store
+/gerber_to_order
+replicate_layout.log

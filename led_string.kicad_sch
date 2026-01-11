@@ -747,7 +747,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "453b87f3-f428-42c0-8460-c0a50c138b62")
-		(property "Reference" "R2"
+		(property "Reference" "R1"
 			(at 129.54 91.4399 0)
 			(effects
 				(font
@@ -756,7 +756,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "0.2"
+		(property "Value" "1R"
 			(at 129.54 93.9799 0)
 			(effects
 				(font
@@ -805,7 +805,7 @@
 					(unit 1)
 				)
 				(path "/b5279a47-4e53-4efd-ad9f-4a5619d0841f/107d8509-ed25-4b81-a133-c6261c323981"
-					(reference "R2")
+					(reference "R1")
 					(unit 1)
 				)
 				(path "/b5279a47-4e53-4efd-ad9f-4a5619d0841f/330e6aa8-6340-4575-ace7-dc8c934c5f90"
@@ -813,7 +813,7 @@
 					(unit 1)
 				)
 				(path "/b5279a47-4e53-4efd-ad9f-4a5619d0841f/34159603-48d9-4829-b1b4-2af69d99cdd9"
-					(reference "R1")
+					(reference "R2")
 					(unit 1)
 				)
 				(path "/b5279a47-4e53-4efd-ad9f-4a5619d0841f/3b2f7939-a680-42c4-988e-0682e3586f44"
