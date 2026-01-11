@@ -2189,7 +2189,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "easyeda2kicad:IND-SMD_L7.1-W6.6"
 			(at 72.39 76.2 0)
 			(effects
 				(font
@@ -2343,7 +2343,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "easyeda2kicad:SMA_L4.3-W2.6-LS5.0-RD"
 			(at 49.53 105.41 0)
 			(effects
 				(font
