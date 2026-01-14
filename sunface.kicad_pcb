@@ -14468,13 +14468,13 @@
 		(embedded_fonts no)
 		(model "${EASYEDA2KICAD}/easyeda2kicad.3dshapes/SOT-89-5_L4.5-W2.5-H1.5-LS4.1-P1.50.wrl"
 			(offset
-				(xyz -903.83 848.71 -0)
+				(xyz 0 0 -0)
 			)
 			(scale
 				(xyz 1 1 1)
 			)
 			(rotate
-				(xyz 0 0 180)
+				(xyz -0 -0 180)
 			)
 		)
 	)
@@ -14804,13 +14804,13 @@
 		(embedded_fonts no)
 		(model "${EASYEDA2KICAD}/easyeda2kicad.3dshapes/SMA_L4.3-W2.6-LS5.0-RD.wrl"
 			(offset
-				(xyz 0 -0 -0)
+				(xyz 0 -0 1.15)
 			)
 			(scale
 				(xyz 1 1 1)
 			)
 			(rotate
-				(xyz 0 0 0)
+				(xyz -0 -0 -0)
 			)
 		)
 	)
