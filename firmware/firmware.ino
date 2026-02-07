@@ -12,9 +12,22 @@ const long gmtOffset_sec = 0;
 const int daylightOffset_sec = 0;
 
 const uint8_t LED_PIN = 4;
-const uint32_t PWM_FREQ = 20000;
-const uint8_t PWM_RES_BITS = 10;
+const uint32_t PWM_FREQ = 5000;
+const uint8_t PWM_RES_BITS = 12;
 const uint32_t PWM_MAX_DUTY = pow(2, PWM_RES_BITS) - 1;
+
+int duty = 0;
+int oldDuty = 0;
+
+// int startTime = (7 * 3600 + 0 * 60);
+// int peakTime = (7 * 3600 + 30 * 60);
+// int endTime = (8 * 3600 + 15 * 60);
+// int offTime = (8 * 3600 + 30 * 60);
+
+int startTime = (7 * 3600 + 0 * 60);
+int peakTime = (7 * 3600 + 30 * 60);
+int endTime = (8 * 3600 + 15 * 60);
+int offTime = (8 * 3600 + 30 * 60);
 
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
@@ -43,8 +56,6 @@ void setup() {
   tzset();
 
   printLocalTime();
-
-  // ledcSetup(pwmChannel, pwmFreq, pwmResolution);
   ledcAttach(LED_PIN, PWM_FREQ, PWM_RES_BITS);
 }
 
@@ -54,37 +65,94 @@ void printLocalTime() {
     Serial.println("Failed to obtain time");
     return;
   }
-
   Serial.println(&timeinfo, "%Y-%m-%d %H:%M:%S");
 }
 
-int oldDuty = 0;
-void loop() {
+int getSecondsSinceMidnight() {
   struct tm timeinfo;
   getLocalTime(&timeinfo);
-  // Serial.println(&timeinfo);
-
   int secondsSinceMidnight = timeinfo.tm_hour * 3600 + timeinfo.tm_min * 60 + timeinfo.tm_sec;
-  int t = constrain(secondsSinceMidnight - (21 * 3600 + 54 * 60), 0, 1800);
-  float normalisedPhase = t / 1800.0;
-  float gamma = 2.2;
-  int duty = pow(normalisedPhase, gamma) * PWM_MAX_DUTY;
-  // int duty = map(t, 0, 1800, 0, 8191);
-
-  // ledcWrite(4, duty);
-  ledcFade(4, oldDuty, duty, 1000);
-  oldDuty = duty;
-
   Serial.print(secondsSinceMidnight);
   Serial.print("    ");
-  Serial.print(t);
+  return secondsSinceMidnight;
+}
+
+float getGammaCorrectedBrightness(float normalisedBrightness, float gamma) {
+  float gammaCorrectedBrightness = pow(normalisedBrightness, gamma);
+  Serial.print(normalisedBrightness, 8);
   Serial.print("    ");
-  Serial.print(normalisedPhase);
+
+  Serial.print(gammaCorrectedBrightness, 8);
   Serial.print("    ");
-  Serial.println(duty);
+  return gammaCorrectedBrightness;
+}
 
+int getDuty(float gammaCorrectedBrightness) {
+  int duty = gammaCorrectedBrightness * PWM_MAX_DUTY;
+  Serial.print(duty);
+  Serial.print("    ");
+  return duty;
+}
 
+int bounce() {
+  for (float i = 0.0; i <= 1.0; i = i + 0.01) {
+    ledcWrite(4, getDuty(getGammaCorrectedBrightness(i, 2.2)));
+    delay(5);
+  }
+  for (float i = 1.0; i >= 0.0; i = i - 0.01) {
+    ledcWrite(4, getDuty(getGammaCorrectedBrightness(i, 2.2)));
+    delay(5);
+  }
+}
 
-  // printLocalTime();
+int pulse() {
+  int t = millis();
+  float phase = (2.0f * 3.14159 * (t % (unsigned long)2000.0)) / 2000.0;
+  Serial.print(phase);
+  Serial.print("    ");
+  float brightness = 0.5f * (sinf(phase) + 1.0f);
+  ledcWrite(4, getDuty(getGammaCorrectedBrightness(brightness / 2, 2.2)));
+  Serial.print(brightness);
+  Serial.print("    ");
+  Serial.println();
+}
+
+void daily() {
+  int secondsSinceMidnight = getSecondsSinceMidnight();
+  float normalisedBrightness = 0.0;
+  if (secondsSinceMidnight < startTime) {
+    Serial.print("Phase 1    ");
+    normalisedBrightness = 0.0;
+  } else if (secondsSinceMidnight < peakTime) {
+    Serial.print("Phase 2    ");
+    int fadeTime = peakTime - startTime;
+    int secondsSinceStart = secondsSinceMidnight - startTime;
+    Serial.print(secondsSinceStart);
+    Serial.print("    ");
+    normalisedBrightness = secondsSinceStart / float(fadeTime);
+  } else if (secondsSinceMidnight < endTime) {
+    Serial.print("Phase 3    ");
+    normalisedBrightness = 1.0;
+  } else if (secondsSinceMidnight < offTime) {
+    Serial.print("Phase 4    ");
+    int fadeTime = offTime - endTime;
+    int secondsSinceEnd = secondsSinceMidnight - endTime;
+    normalisedBrightness = 1.0 - (secondsSinceEnd / float(fadeTime));
+  } else {
+    Serial.print("Phase 5    ");
+    normalisedBrightness = 0.0;
+  }
+
+  float gammaCorrectedBrightness = getGammaCorrectedBrightness(normalisedBrightness, 2.2);
+  int duty = getDuty(gammaCorrectedBrightness);
+  ledcFade(4, oldDuty, duty, 1000);
+  oldDuty = duty;
   delay(1000);  // wait for a second
+  Serial.println();
+}
+
+void loop() {
+  daily();
+  // bounce();
+  // pulse();
 }
