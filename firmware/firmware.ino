@@ -19,13 +19,8 @@ const uint32_t PWM_MAX_DUTY = pow(2, PWM_RES_BITS) - 1;
 int duty = 0;
 int oldDuty = 0;
 
-// int startTime = (7 * 3600 + 0 * 60);
-// int peakTime = (7 * 3600 + 30 * 60);
-// int endTime = (8 * 3600 + 15 * 60);
-// int offTime = (8 * 3600 + 30 * 60);
-
-int startTime = (7 * 3600 + 0 * 60);
-int peakTime = (7 * 3600 + 30 * 60);
+int startTime = (6 * 3600 + 45 * 60);
+int peakTime = (7 * 3600 + 15 * 60);
 int endTime = (8 * 3600 + 15 * 60);
 int offTime = (8 * 3600 + 30 * 60);
 
