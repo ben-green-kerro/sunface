@@ -4,8 +4,8 @@
 #include <WiFi.h>
 #include <time.h>
 
-const char* ssid = "EE-86SJFT";
-const char* password = "yq7PRCx7dgni3kW6";
+const char* ssid = "4G-WiFi-KQGW-2.4GHz";
+const char* password = "VeX7UD6Eixgc";
 
 const char* ntpServer = "pool.ntp.org";
 const long gmtOffset_sec = 0;
@@ -21,8 +21,8 @@ int oldDuty = 0;
 
 int startTime = (6 * 3600 + 45 * 60);
 int peakTime = (7 * 3600 + 15 * 60);
-int endTime = (8 * 3600 + 15 * 60);
-int offTime = (8 * 3600 + 30 * 60);
+int endTime = (12 * 3600 + 15 * 60);
+int offTime = (12 * 3600 + 30 * 60);
 
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
