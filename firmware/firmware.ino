@@ -4,8 +4,7 @@
 #include <WiFi.h>
 #include <time.h>
 
-const char* ssid = "4G-WiFi-KQGW-2.4GHz";
-const char* password = "VeX7UD6Eixgc";
+#include "secrets.h"
 
 const char* ntpServer = "pool.ntp.org";
 const long gmtOffset_sec = 0;

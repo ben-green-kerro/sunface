@@ -32,3 +32,6 @@ fp-info-cache
 .DS_Store
 /gerber_to_order
 replicate_layout.log
+
+# WiFi credentials — copy secrets.h.example to secrets.h and fill in real values
+firmware/secrets.h
